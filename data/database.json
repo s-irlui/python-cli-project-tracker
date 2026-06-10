@@ -9,7 +9,7 @@
     "projects": [
         {
             "project_id": 1,
-            "title": "CLI Tracker",
+            "title": "Advanced CLI Tracker",
             "description": "Python project management system",
             "user_id": 1
         }

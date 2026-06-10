@@ -98,6 +98,25 @@ def search_projects(args):
 
     console.print(table)
 
+def edit_project(args):
+    data = load_data()
+
+    for project in data["projects"]:
+        if project["project_id"] == args.project_id:
+
+            if args.title:
+                project["title"] = args.title
+
+            if args.description:
+                project["description"] = args.description
+
+            save_data(data)
+
+            console.print("[green]Project updated successfully.[/green]")
+            return
+
+    console.print("[red]Project not found.[/red]")
+
 
 def user_projects(args):
     data = load_data()
@@ -213,6 +232,27 @@ def build_parser():
         "search-projects",
         help="Search projects by title or description"
     )
+
+    edit_project_parser = subparsers.add_parser(
+        "edit-project",
+        help="Edit an existing project"
+    )
+
+    edit_project_parser.add_argument(
+        "--project-id",
+        type=int,
+        required=True
+    )
+
+    edit_project_parser.add_argument(
+        "--title"
+    )
+
+    edit_project_parser.add_argument(
+        "--description"
+    )
+
+    edit_project_parser.set_defaults(func=edit_project)
     search_projects_parser.add_argument("--keyword", required=True)
     search_projects_parser.set_defaults(func=search_projects)
 
@@ -241,6 +281,9 @@ def build_parser():
     complete_task_parser.set_defaults(func=complete_task)
 
     return parser
+
+
+
 
 
 def main():
