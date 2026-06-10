@@ -1,18 +1,20 @@
-class User:
+from app.base import BaseModel
+
+class User(BaseModel):
     def __init__(self, user_id, name, email):
-        self.user_id = user_id
+        super().__init__(user_id)
         self.name = name
         self.email = email
 
     def to_dict(self):
         return {
-            "user_id": self.user_id,
+            "user_id": self.id,
             "name": self.name,
             "email": self.email
         }
 
 
-class Project:
+class Project(BaseModel):
     def __init__(self, project_id, title, description, user_id):
         self.project_id = project_id
         self.title = title
