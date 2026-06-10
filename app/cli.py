@@ -72,6 +72,33 @@ def list_projects(args):
     console.print(table)
 
 
+def search_projects(args):
+    data = load_data()
+    keyword = args.keyword.lower()
+
+    results = [
+        project for project in data["projects"]
+        if keyword in project["title"].lower()
+        or keyword in project["description"].lower()
+    ]
+
+    table = Table(title=f"Search Results for '{args.keyword}'")
+    table.add_column("ID")
+    table.add_column("Title")
+    table.add_column("Description")
+    table.add_column("User ID")
+
+    for project in results:
+        table.add_row(
+            str(project["project_id"]),
+            project["title"],
+            project["description"],
+            str(project["user_id"])
+        )
+
+    console.print(table)
+
+
 def user_projects(args):
     data = load_data()
 
@@ -181,6 +208,13 @@ def build_parser():
 
     list_projects_parser = subparsers.add_parser("list-projects", help="List all projects")
     list_projects_parser.set_defaults(func=list_projects)
+
+    search_projects_parser = subparsers.add_parser(
+        "search-projects",
+        help="Search projects by title or description"
+    )
+    search_projects_parser.add_argument("--keyword", required=True)
+    search_projects_parser.set_defaults(func=search_projects)
 
     user_projects_parser = subparsers.add_parser(
         "user-projects",
