@@ -14,16 +14,5 @@
             "user_id": 1
         }
     ],
-    "tasks": [
-        {
-            "task_id": 1,
-            "title": "Create models",
-            "project_id": 1,
-            "contributors": [
-                "Louis",
-                "James"
-            ],
-            "completed": true
-        }
-    ]
+    "tasks": []
 }

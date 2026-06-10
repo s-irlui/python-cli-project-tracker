@@ -202,7 +202,50 @@ def complete_task(args):
             return
 
     console.print("[red]Task not found.[/red]")
+def delete_user(args):
+    data = load_data()
 
+    data["users"] = [
+        user for user in data["users"]
+        if user["user_id"] != args.user_id
+    ]
+
+    data["projects"] = [
+        project for project in data["projects"]
+        if project["user_id"] != args.user_id
+    ]
+
+    save_data(data)
+    console.print("[green]User deleted successfully.[/green]")
+
+
+def delete_project(args):
+    data = load_data()
+
+    data["projects"] = [
+        project for project in data["projects"]
+        if project["project_id"] != args.project_id
+    ]
+
+    data["tasks"] = [
+        task for task in data["tasks"]
+        if task["project_id"] != args.project_id
+    ]
+
+    save_data(data)
+    console.print("[green]Project deleted successfully.[/green]")
+
+
+def delete_task(args):
+    data = load_data()
+
+    data["tasks"] = [
+        task for task in data["tasks"]
+        if task["task_id"] != args.task_id
+    ]
+
+    save_data(data)
+    console.print("[green]Task deleted successfully.[/green]")
 
 def build_parser():
     parser = argparse.ArgumentParser(
@@ -279,6 +322,18 @@ def build_parser():
     )
     complete_task_parser.add_argument("--task-id", type=int, required=True)
     complete_task_parser.set_defaults(func=complete_task)
+
+    delete_user_parser = subparsers.add_parser("delete-user", help="Delete a user")
+    delete_user_parser.add_argument("--user-id", type=int, required=True)
+    delete_user_parser.set_defaults(func=delete_user)
+
+    delete_project_parser = subparsers.add_parser("delete-project", help="Delete a project")
+    delete_project_parser.add_argument("--project-id", type=int, required=True)
+    delete_project_parser.set_defaults(func=delete_project)
+
+    delete_task_parser = subparsers.add_parser("delete-task", help="Delete a task")
+    delete_task_parser.add_argument("--task-id", type=int, required=True)
+    delete_task_parser.set_defaults(func=delete_task)
 
     return parser
 
