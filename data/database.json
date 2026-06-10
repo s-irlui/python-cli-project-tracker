@@ -4,6 +4,11 @@
             "user_id": 1,
             "name": "Louis",
             "email": "louis@example.com"
+        },
+        {
+            "user_id": 2,
+            "name": "Test User",
+            "email": "test@example.com"
         }
     ],
     "projects": [
@@ -12,7 +17,23 @@
             "title": "Advanced CLI Tracker",
             "description": "Python project management system",
             "user_id": 1
+        },
+        {
+            "project_id": 2,
+            "title": "Test Project",
+            "description": "Testing CLI",
+            "user_id": 1
         }
     ],
-    "tasks": []
+    "tasks": [
+        {
+            "task_id": 1,
+            "title": "Test Task",
+            "project_id": 1,
+            "contributors": [
+                "Louis"
+            ],
+            "completed": true
+        }
+    ]
 }
