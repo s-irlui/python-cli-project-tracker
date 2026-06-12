@@ -191,6 +191,80 @@ def list_tasks(args):
     console.print(table)
 
 
+def list_all(args):
+    data = load_data()
+
+    table = Table(title="Project Tracker Overview")
+    table.add_column("User ID")
+    table.add_column("User")
+    table.add_column("Email")
+    table.add_column("Project ID")
+    table.add_column("Project")
+    table.add_column("Description")
+    table.add_column("Task ID")
+    table.add_column("Task")
+    table.add_column("Contributors")
+    table.add_column("Completed")
+
+    for user in data["users"]:
+        user_projects = [
+            project for project in data["projects"]
+            if project["user_id"] == user["user_id"]
+        ]
+
+        if not user_projects:
+            table.add_row(
+                str(user["user_id"]),
+                user["name"],
+                user["email"],
+                "-",
+                "-",
+                "-",
+                "-",
+                "-",
+                "-",
+                "-"
+            )
+            continue
+
+        for project in user_projects:
+            project_tasks = [
+                task for task in data["tasks"]
+                if task["project_id"] == project["project_id"]
+            ]
+
+            if not project_tasks:
+                table.add_row(
+                    str(user["user_id"]),
+                    user["name"],
+                    user["email"],
+                    str(project["project_id"]),
+                    project["title"],
+                    project["description"],
+                    "-",
+                    "-",
+                    "-",
+                    "-"
+                )
+                continue
+
+            for task in project_tasks:
+                table.add_row(
+                    str(user["user_id"]),
+                    user["name"],
+                    user["email"],
+                    str(project["project_id"]),
+                    project["title"],
+                    project["description"],
+                    str(task["task_id"]),
+                    task["title"],
+                    ", ".join(task["contributors"]),
+                    "Yes" if task["completed"] else "No"
+                )
+
+    console.print(table)
+
+
 def complete_task(args):
     data = load_data()
 
@@ -315,6 +389,12 @@ def build_parser():
     list_tasks_parser = subparsers.add_parser("list-tasks", help="List tasks in a project")
     list_tasks_parser.add_argument("--project-id", type=int, required=True)
     list_tasks_parser.set_defaults(func=list_tasks)
+
+    list_all_parser = subparsers.add_parser(
+        "list-all",
+        help="Show users, projects, and tasks in one table"
+    )
+    list_all_parser.set_defaults(func=list_all)
 
     complete_task_parser = subparsers.add_parser(
         "complete-task",
