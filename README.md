@@ -22,9 +22,45 @@ A command-line project management tool built with Python. It allows administrato
 - os
 - Rich
 - Pytest
+- Pipenv
+
+## Setup
+
+If Pipenv is not installed yet:
+
+```bash
+python3 -m pip install --user pipenv
+```
+
+Install dependencies:
+
+```bash
+pipenv install --dev
+```
+
+## Usage
+
+Show all CLI commands:
+
+```bash
+pipenv run python main.py
+```
+
+Show users, projects, and tasks in one full table:
+
+```bash
+pipenv run python main.py list-all
+```
+
+Run tests:
+
+```bash
+pipenv run pytest
+```
 
 ## Project Structure
 
+```text
 S.irlui
 app/
   models.py
@@ -34,6 +70,8 @@ data/
   database.json
 tests/
   test_models.py
+  test_storage.py
 main.py
-requirements.txt
+Pipfile
 README.md
+```

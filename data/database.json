@@ -9,6 +9,16 @@
             "user_id": 2,
             "name": "Test User",
             "email": "test@example.com"
+        },
+        {
+            "user_id": 3,
+            "name": "Louis",
+            "email": "derro@example.com"
+        },
+        {
+            "user_id": 4,
+            "name": "derro",
+            "email": "derro@example.com"
         }
     ],
     "projects": [
